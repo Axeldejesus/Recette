@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier la Recette</title>
+</head>
+<body>
+    <h2>Modifier la Recette</h2>
+    <form action="/recettes/modifier/<%= recette._id %>" method="post">
+        <label for="titre">Titre :</label>
+        <input type="text" id="titre" name="titre" value="<%= recette.titre %>" required><br>
+
+        <label for="description">Description :</label>
+        <textarea id="description" name="description" required><%= recette.description %></textarea><br>
+
+        <!-- Ajoutez ici des champs supplémentaires si nécessaire -->
+
+        <input type="submit" value="Modifier la recette">
+    </form>
+</body>
+</html>

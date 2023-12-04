@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter une Recette</title>
+</head>
+<body>
+    <h2>Ajouter une Recette</h2>
+    <form action="/recettes/ajouter" method="post">
+        <label for="titre">Titre :</label>
+        <input type="text" id="titre" name="titre" required><br>
+
+        <label for="description">Description :</label>
+        <textarea id="description" name="description" required></textarea><br>
+
+        <!-- Champ de sélection pour les catégories -->
+        <label for="categorie">Catégorie :</label>
+        <select id="categorie" name="categorie">
+            <option value="65671ef26d890de6e552708b">Dessert</option> <!-- Remplacer par l'ID de la catégorie -->
+            <option value="65671ef26d890de6e552708c">Végétarien</option> <!-- Remplacer par l'ID de la catégorie -->
+            <option value="65671ef26d890de6e552708d">Rapide</option> <!-- Remplacer par l'ID de la catégorie -->
+        </select><br>
+
+        <input type="submit" value="Ajouter la recette">
+    </form>
+</body>
+</html>
+
+
