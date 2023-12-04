@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recherche recette</title>
+</head>
+<body>
+  <!-- resultats-recherche.ejs -->
+<!-- resultats-recherche.ejs -->
+<h2>Résultats de Recherche</h2>
+<% if (recettes.length > 0) { %>
+    <ul>
+        <% recettes.forEach(recette => { %>
+            <li>
+                <h3><%= recette.titre %></h3>
+                <p><%= recette.description %></p>
+               
+            </li>
+        <% }); %>
+    </ul>
+<% } else { %>
+    <p>Aucune recette trouvée.</p>
+<% } %>
+
+
+</ul>
+</body>
+</html>
