@@ -10,6 +10,7 @@ Ajout, modification, et suppression de recettes
 Recherche de recettes par titre
 Commentaires sur les recettes
 Classification des recettes par catégories
+Permet l'ajout d'image
 
 
 Technologies Utilisées : 
@@ -21,6 +22,7 @@ Mongoose
 EJS pour les vues
 Passport.js pour l'authentification
 Bcrypt pour les mots de passe
+Multer pour les images
 
 
 Utilisation : 
