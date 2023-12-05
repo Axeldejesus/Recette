@@ -6,7 +6,9 @@
 </head>
 <body>
     <h2>Ajouter une Recette</h2>
-    <form action="/recettes/ajouter" method="post">
+
+    <!-- Assurez-vous d'ajouter l'attribut enctype pour le téléchargement de fichiers -->
+    <form action="/recettes/ajouter" method="post" enctype="multipart/form-data">
         <label for="titre">Titre :</label>
         <input type="text" id="titre" name="titre" required><br>
 
@@ -21,9 +23,14 @@
             <option value="65671ef26d890de6e552708d">Rapide</option> <!-- Remplacer par l'ID de la catégorie -->
         </select><br>
 
+        <!-- Champ pour le téléchargement d'image -->
+        <label for="imageRecette">Image de la Recette :</label>
+        <input type="file" id="imageRecette" name="imageRecette"><br>
+
         <input type="submit" value="Ajouter la recette">
     </form>
 </body>
 </html>
+
 
 

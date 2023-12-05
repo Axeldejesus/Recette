@@ -6,23 +6,28 @@
 </head>
 <body>
     <h2><%= recette.titre %></h2>
+    <!-- Affichage de l'image de la recette si elle existe -->
+    <% if (recette.image) { %>
+        <img src="<%= recette.image %>" alt="Image de <%= recette.titre %>" style="max-width: 500px;">
+    <% } %>
+    
     <p><%= recette.description %></p>
     <!-- Ajoutez ici d'autres détails de la recette si nécessaire -->
 
     <h3>Commentaires</h3>
-<% if (commentaires && commentaires.length) { %>
-    <ul>
-        <% commentaires.forEach(function(commentaire) { %>
-            <li>
-                <strong>Note : <%= commentaire.note %>/5</strong>
-                <p><%= commentaire.contenu %></p>
-                <!-- Autres informations sur le commentaire si nécessaire -->
-            </li>
-        <% }); %>
-    </ul>
-<% } else { %>
-    <p>Aucun commentaire pour cette recette.</p>
-<% } %>
+    <% if (commentaires && commentaires.length) { %>
+        <ul>
+            <% commentaires.forEach(function(commentaire) { %>
+                <li>
+                    <strong>Note : <%= commentaire.note %>/5</strong>
+                    <p><%= commentaire.contenu %></p>
+                    <!-- Autres informations sur le commentaire si nécessaire -->
+                </li>
+            <% }); %>
+        </ul>
+    <% } else { %>
+        <p>Aucun commentaire pour cette recette.</p>
+    <% } %>
 
     <h3>Ajouter un commentaire</h3>
     <form action="/commentaires/ajouter/<%= recette._id %>" method="post">
@@ -34,8 +39,8 @@
 
         <!-- Assurez-vous d'inclure l'ID de l'utilisateur si vous gérez les sessions -->
         
-
         <input type="submit" value="Ajouter le commentaire">
     </form>
 </body>
 </html>
+

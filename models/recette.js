@@ -17,6 +17,7 @@ const recetteSchema = new mongoose.Schema({
     auteur: { type: mongoose.Schema.Types.ObjectId, ref: 'Utilisateur' },
     // auteur sert à définir le champ auteur de type ObjectId
     // ref: 'Utilisateur' sert à définir la référence vers le modèle Utilisateur
+    image: String,
     
 });
 

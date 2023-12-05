@@ -12,54 +12,70 @@ const Commentaire = mongoose.model('Commentaire');
 // utilise le modèle Commentaire
 const Categorie = mongoose.model('Categorie');
 // utilise le modèle Categorie
+const multer = require('multer');
+// utilise multer pour la gestion des images
+const path = require('path');
+// utilise path pour la gestion des chemins
+const fs = require('fs');
+// utilise fs pour la gestion des fichiers
 
+
+
+// Configuration de Multer pour le stockage des images
+const storage = multer.diskStorage({
+    // diskStorage sert à définir le stockage des images
+    destination: function(req, file, cb) {
+        // destination sert à définir le chemin de destination des images
+        cb(null, 'public/uploads/'); 
+        // cb sert à définir le chemin de destination des images
+    },
+    filename: function(req, file, cb) {
+        // filename sert à définir le nom des images
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+        // cb sert à définir le nom des images
+        // path.extname sert à définir l'extension des images
+    }
+});
+
+const upload = multer({ storage: storage });
+// upload sert à définir le stockage des images
 
 // Afficher le formulaire d'ajout d'une recette
 router.get('/ajouter', (req, res) => {
-    // Récupérer les catégories
-    // get sert à récupérer des données
-    // /ajouter sert à définir l'URL
     res.render('ajouter-recette');
-    // res.render sert à afficher la page ajouter-recette
 });
 
-router.post('/ajouter', async (req, res) => {
-    // Ajouter une recette
+router.post('/ajouter', upload.single('imageRecette'), async (req, res) => {
     // post sert à envoyer des données
     // /ajouter sert à définir l'URL
-    // async sert à définir une fonction asynchrone
+    // upload.single('imageRecette') sert à définir le stockage des images
     try {
-        // Récupérer les données du formulaire
         const { titre, description, categorie } = req.body;
-        // titre sert à définir la variable qui va contenir le titre
-        // description sert à définir la variable qui va contenir la description
-        // categorie sert à définir la variable qui va contenir la catégorie
-        // req.body sert à récupérer les données du formulaire
+        // const { titre, description, categorie } sert à définir les champs du formulaire
+        let imagePath = '';
+        // let imagePath sert à définir le chemin de l'image
+        // '' sert à définir le chemin de l'image
+        if (req.file) {
+            // if sert à définir le bloc de code à exécuter si l'image existe
+            imagePath = '/uploads/' + req.file.filename;
+            // req.file.filename sert à définir le nom de l'image
+        }
         const nouvelleRecette = new Recette({
-            // nouvelleRecette sert à définir la variable qui va contenir la nouvelle recette
+            // const nouvelleRecette sert à définir la variable qui va contenir la nouvelle recette
             titre,
-            // titre sert à définir la variable qui va contenir le titre
             description,
-            // description sert à définir la variable qui va contenir la description
-            categories: [categorie] 
-            // categories sert à définir la variable qui va contenir la catégorie
-
+            categories: [categorie],
+            image: imagePath 
         });
 
         await nouvelleRecette.save();
-        // await sert à attendre la sauvegarde de la recette
+        // await sert à attendre la sauvegarde de la nouvelle recette
         req.flash('success', 'Recette ajoutée avec succès.');
-        // req.flash sert à afficher un message flash
         res.redirect('/recettes');
-        // res.redirect sert à rediriger vers la page recettes
     } catch (err) {
-        // err sert à définir la variable qui va contenir l'erreur
         console.error(err);
-        // console.error sert à afficher l'erreur dans la console
         req.flash('error', 'Erreur lors de l\'ajout de la recette.');
-        // req.flash sert à afficher un message flash
         res.redirect('/recettes/ajouter');
-        // res.redirect sert à rediriger vers la page ajouter-recette
     }
 });
 
@@ -112,30 +128,33 @@ router.post('/modifier/:id', (req, res) => {
         });
 });
 
-// Supprimer une recette
-router.get('/supprimer/:id', (req, res) => {
-    // get sert à récupérer des données
-    // /supprimer/:id sert à définir l'URL
-    Recette.findByIdAndDelete(req.params.id)
-    // Recette.findByIdAndDelete sert à trouver la recette et la supprimer
-    // req.params.id sert à récupérer l'ID de la recette
-        .then(() => {
-            // then sert à définir le bloc de code à exécuter si la récupération est réussie
-            req.flash('success', 'Recette supprimée avec succès.');
-            // req.flash sert à afficher un message flash
-            res.redirect('/recettes');
-            // res.redirect sert à rediriger vers la page recettes
-        })
-        .catch(err => {
-            // err sert à définir la variable qui va contenir l'erreur
-            console.error(err);
-            // console.error sert à afficher l'erreur dans la console
-            req.flash('error', 'Erreur lors de la suppression de la recette.');
-            // req.flash sert à afficher un message flash
-            res.redirect('/recettes');
-            // res.redirect sert à rediriger vers la page recettes
-        });
+router.get('/supprimer/:id', async (req, res) => {
+    try {
+        // Trouver la recette avant de la supprimer pour obtenir le chemin de l'image
+        const recette = await Recette.findById(req.params.id);
+        if (recette && recette.image) {
+            // Construire le chemin complet de l'image
+            const imagePath = path.join(__dirname, '..', 'public', recette.image);
+            // Supprimer l'image du système de fichiers
+            fs.unlink(imagePath, (err) => {
+                if (err) {
+                    console.error("Erreur lors de la suppression de l'image:", err);
+                }
+            });
+        }
+
+        // Supprimer la recette
+        await Recette.findByIdAndDelete(req.params.id);
+        req.flash('success', 'Recette supprimée avec succès.');
+        res.redirect('/recettes');
+    } catch (err) {
+        console.error(err);
+        req.flash('error', 'Erreur lors de la suppression de la recette.');
+        res.redirect('/recettes');
+    }
 });
+
+
 
 // Afficher les recettes
 router.get('/', (req, res) => {
