@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Modifier la Recette</title>
+    <link rel="stylesheet" href="/css/page_modifier.css">
 </head>
 <body>
     <h2>Modifier la Recette</h2>
@@ -13,9 +14,10 @@
         <label for="description">Description :</label>
         <textarea id="description" name="description" required><%= recette.description %></textarea><br>
 
-        <!-- Ajoutez ici des champs supplémentaires si nécessaire -->
+        
 
         <input type="submit" value="Modifier la recette">
     </form>
+    <a href="/recettes">Retour à la liste des recettes</a>
 </body>
 </html>

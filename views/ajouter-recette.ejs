@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Ajouter une Recette</title>
+    <link rel="stylesheet" href="/css/page_ajouter.css">
 </head>
 <body>
     <h2>Ajouter une Recette</h2>
 
-    <!-- Assurez-vous d'ajouter l'attribut enctype pour le téléchargement de fichiers -->
+    <!-- Formulaire d'ajout de recette -->
     <form action="/recettes/ajouter" method="post" enctype="multipart/form-data">
         <label for="titre">Titre :</label>
         <input type="text" id="titre" name="titre" required><br>
@@ -29,6 +30,7 @@
 
         <input type="submit" value="Ajouter la recette">
     </form>
+    <a href="/recettes">Retour à la liste des recettes</a>
 </body>
 </html>
 

@@ -3,17 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Liste des Recettes</title>
+    <link rel="stylesheet" href="/css/page_liste.css">
 </head>
 <body>
     <h2>Liste des Recettes</h2>
 
-    <!-- Liens de Filtrage par Catégorie -->
+    
     <div>
         <a href="/recettes/categorie/65671ef26d890de6e552708b">Dessert</a>
         <a href="/recettes/categorie/65671ef26d890de6e552708c">Végétarien</a>
         <a href="/recettes/categorie/65671ef26d890de6e552708d">Rapide</a>
+        <a href="/recettes">Toutes les catégories</a>
 
-    </div>
+    </div> 
+    <form action="/recettes/recherche" method="GET">
+        <input type="text" name="titre" placeholder="Rechercher une recette">
+        <button type="submit">Rechercher</button>
+    </form>
 
     <% if (messages.success) { %>
         <div style="color: green;"><%= messages.success %></div>
@@ -26,18 +32,17 @@
         <% recettes.forEach(function(recette) { %>
             <li>
                 <%= recette.titre %>
-                - <a href="/recettes/detail/<%= recette._id %>">Voir</a>
-                - <a href="/recettes/modifier/<%= recette._id %>">Modifier</a>
-                - <a href="/recettes/supprimer/<%= recette._id %>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette recette ?');">Supprimer</a>
+                 <a href="/recettes/detail/<%= recette._id %>">Voir</a>
+                 <a href="/recettes/modifier/<%= recette._id %>">Modifier</a>
+                 <a href="/recettes/supprimer/<%= recette._id %>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette recette ?');">Supprimer</a>
             </li>
         <% }); %>
     </ul>
-    <form action="/recettes/recherche" method="GET">
-        <input type="text" name="titre" placeholder="Rechercher une recette">
-        <button type="submit">Rechercher</button>
-    </form>
-    
-    
+
+    <footer>
+        <a href="/recettes/ajouter">Ajouter une recette</a>
+        <a href="/">Retour à l'accueil</a>
+    </footer>
 </body>
 </html>
 
