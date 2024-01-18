@@ -44,12 +44,7 @@
 //     const Commentaire = mongoose.model('Commentaire', commentaireSchema);
 
 //     // Insertion des utilisateurs
-//     const userDocs = await User.insertMany([
-//       { nom: 'Axel Teixeira de jesus', email: 'axelteixeiradejesus@gmail.com', motDePasse: 'qwaser28', role: 'admin' },
-//       { nom: 'Bob Martin', email: 'bob.martin@example.com', motDePasse: 'hashed_password2', role: 'user' },
-//       { nom: 'Charlie Leroy', email: 'charlie.leroy@example.com', motDePasse: 'hashed_password3', role: 'auteur' },
-//     ]);
-//     console.log('Users inserted', userDocs);
+//    
 
 //     // Insertion des catégories
 //     const categorieDocs = await Categorie.insertMany([
